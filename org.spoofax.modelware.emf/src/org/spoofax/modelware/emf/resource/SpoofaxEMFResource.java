@@ -54,6 +54,7 @@ public class SpoofaxEMFResource extends ResourceImpl {
 	 */
 	protected void doLoad(InputStream inputStream, Map<?, ?> options) {
 		FileState editorOrFileState = Utils.getEditorOrFileState(path);
+		long startTime = System.currentTimeMillis();
 		IStrategoTerm ASTgraph = Utils.getASTgraph(editorOrFileState);
 		
 		EPackage pack = getEPackage();
@@ -77,9 +78,11 @@ public class SpoofaxEMFResource extends ResourceImpl {
 				Environment.logException("Unknown root class.");
 				return;
 			}
-		}
-
+		}		
 		getContents().add(0, eObject);
+		long endTime = System.currentTimeMillis();
+				
+		System.out.println("Execution time (ms): " + (endTime - startTime));
 	}
 
 	protected void doSave(OutputStream outputStream, Map<?, ?> options) {
